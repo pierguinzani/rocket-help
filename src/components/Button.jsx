@@ -18,7 +18,7 @@ export function Button({...props}){
         } 
       {...props}
     >
-      Entrar
+    {props.title}
     </NativeBaseButton>
   )
 }

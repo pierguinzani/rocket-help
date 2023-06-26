@@ -8,7 +8,11 @@ import { Input } from "../components/Input";
 
 
 
-export function SignIn() {
+export function SignIn({ navigation }) {
+  const handleSignIn = () => {
+    navigation.navigate('Home'); 
+  };
+  
   return (
     <View bgColor={"#202024"} flex={1} justifyContent={"center"} alignItems={"center"}>
       <Logo /> 
@@ -17,6 +21,7 @@ export function SignIn() {
         marginTop={"24px"}
         fontSize={"16px"}
         placeholder={"E-mail"}
+        keyboardType={"email-address"}
         InputLeftElement={<IonicIcons name="mail-outline" color={"#7C7C8A"} marginLeft={16} size={24} /> }
       />
       <Input 
@@ -28,7 +33,9 @@ export function SignIn() {
         marginBotton={"32px"}
         />
       <Button 
+        title={"Entrar"}
         marginBottom={"260px"}
+        onPress={handleSignIn}
       />
 
     </View>
