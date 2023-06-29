@@ -28,15 +28,3 @@ export function Header({ title, ...rest }) {
 }
 
 
-
-
-
-
-
-
-    // <Center width={"428px"} height={"136px"} marginBottom={"400px"} bgColor={"#202024"} flexDirection={"row"} justifyContent={"space-around"} >
-    //   <LogoHeader marginTop={86}/>
-    //   <SignOutIcon />
-    // </Center>
-  
-
