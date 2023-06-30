@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Box,
-  NativeBaseProvider,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
   Image,
   Text,
   View,
-} from 'native-base';
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -16,23 +16,15 @@ const styles = StyleSheet.create({
   },
   boxAll: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
   },
   boxAImg: {
-    marginTop: '-40%',
-  },
-  img: {
-    width: '20%',
-    resizeMode: 'contain',
-    alignSelf: 'center',
+    marginTop: '15%',
   },
   title: {
-    alignSelf: 'center',
     color: '#E1E1E6',
     fontSize: 20,
-    textAlign: 'center',
     marginTop: '25%',
   },
   boxInput: {
@@ -45,16 +37,15 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#121214',
-    borderWidth: 0,
     borderRadius: 5,
-    height: 56,
+    height: 46,
     paddingHorizontal: 40,
     color: '#7C7C8A',
   },
   inputImage: {
     position: 'absolute',
     left: 10,
-    top: 18,
+    top: 12.5,
     zIndex: 9999,
   },
   boxBotton: {
@@ -63,7 +54,7 @@ const styles = StyleSheet.create({
   enter: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 56,
+    height: 46,
     borderRadius: 5,
     backgroundColor: '#00875F',
   },
@@ -76,26 +67,20 @@ const styles = StyleSheet.create({
 export default function Welcome() {
   const navigation = useNavigation();
 
-  const entrarHome = () => {
-    navigation.reset({
-      routes: [{ name: 'Home' }],
-    });
-  };
-
   return (
-    <NativeBaseProvider>
-      <Box style={styles.container}>
-        <Box style={styles.boxAll}>
-          <Box style={styles.boxAImg}>
+  
+      <View style={styles.container}>
+        <View style={styles.boxAll}>
+          <View style={styles.boxAImg}>
             <Image
               source={require('../../../assets/Logo.png')}
               style={styles.logo}
               alt="logo"
             />
-          </Box>
+          </View>
           <Text style={styles.title}>Acesse sua conta</Text>
 
-          <Box style={styles.boxInput}>
+          <View style={styles.boxInput}>
             <View style={styles.inputContainer}>
               <Image
                 source={require('../../../assets/email.png')}
@@ -123,15 +108,15 @@ export default function Welcome() {
               />
             </View>
 
-            <Box style={styles.boxBotton}>
-              <TouchableOpacity style={styles.enter} onPress={entrarHome}>
+            <View style={styles.boxBotton}>
+              <TouchableOpacity style={styles.enter} onPress={() => navigation.navigate("Home")}>
                 <Text style={styles.txtbotton}> Nova solicitação</Text>
               </TouchableOpacity>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </NativeBaseProvider>
+            </View>
+          </View>
+        </View>
+      </View>
+
   );
 }
 

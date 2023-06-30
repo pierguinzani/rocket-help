@@ -1,45 +1,49 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function TaskList({ data }) {
   const navigation = useNavigation();
 
-  function handleTaskPress() {
-    navigation.navigate('InfosTask', { taskData: data });
-  }
+  const handleTaskPress = useCallback(() => {
+    if (data.status === 'emAndamento') {
+      navigation.navigate('InfosTask', { taskData: data });
+    } else if (data.status === 'finalizada') {
+      navigation.navigate('FinalizadosFinal', { taskData: data });
+    }
+  }, [data, navigation]);
 
-  const isEmAndamento = data.status === 'emAndamento';
+  const isTaskInProgress = data.status === 'emAndamento';
 
   return (
     <View
       style={[
         styles.container,
-        isEmAndamento ? styles.containerAndamento : styles.containerFinalizado,
+        isTaskInProgress ? styles.containerInProgress : styles.containerFinished,
       ]}
     >
-      <TouchableOpacity style={styles.boxTxtImg} onPress={handleTaskPress}>
-        <Text style={styles.task}>{data.task}</Text>
+      <TouchableOpacity style={styles.textImageBox} onPress={handleTaskPress}>
+        <Text style={styles.taskName}>{data.task}</Text>
         <View style={styles.hr}>
           <Image
             source={require('../../../assets/relogio.png')}
-            style={styles.aplt}
+            style={styles.clockIcon}
           />
-          <Text style={styles.data}>20/01/22 às 14h</Text>
+          <Text style={styles.timestamp}>{data.status === "finalizada" ? data.timestamp : data.timestamp}</Text>
         </View>
       </TouchableOpacity>
 
       <View style={styles.imageContainer}>
-        {isEmAndamento ? (
+        {isTaskInProgress ? (
           <Image
             source={require('../../../assets/ampulheta.png')}
-            style={styles.aplt}
+            style={styles.hourglassIcon}
             resizeMode="contain"
           />
         ) : (
           <Image
             source={require('../../../assets/verificadogreen.png')}
-            style={styles.vrf}
+            style={styles.checkmarkIcon}
             resizeMode="contain"
           />
         )}
@@ -66,13 +70,13 @@ const styles = StyleSheet.create({
       height: 3,
     },
   },
-  containerAndamento: {
+  containerInProgress: {
     borderColor: '#FBA94C',
   },
-  containerFinalizado: {
+  containerFinished: {
     borderColor: '#04D361',
   },
-  task: {
+  taskName: {
     color: '#fff',
     fontWeight: 'bold',
   },
@@ -82,14 +86,29 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   hr: {
-    display: 'flex',
     flexDirection: 'row',
     marginTop: 10,
+    alignItems:'center'
   },
-  data: {
+  timestamp: {
     color: '#C4C4CC',
     marginLeft: 10,
     fontSize: 12,
   },
-  vrf: {},
+  clockIcon: {
+    width: 16,
+    height: 16,
+  },
+  hourglassIcon: {
+    width: 24,
+    height: 24,
+  },
+  checkmarkIcon: {
+    width: 24,
+    height: 24,
+  },
+  textImageBox: {
+    flex: 1,
+  },
 });
+

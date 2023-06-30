@@ -2,7 +2,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import Welcome from '../pages/Welcome';
 import Home from '../pages/Home';
-// import TaskList from '../pages/TaskList';
 import FinalizadosFinal from '../pages/FinalizadosFinal';
 import InfosTask from '../pages/InfosTask/infosTask';
 
@@ -21,12 +20,6 @@ export default function Routes() {
         component={Home}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name="TaskList"
-        component={TaskList}
-        options={{ headerShown: false }}
-      /> */}
-    
       <Stack.Screen
         name="FinalizadosFinal"
         component={FinalizadosFinal}

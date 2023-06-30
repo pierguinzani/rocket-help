@@ -1,345 +1,347 @@
-import React, { useState, useContext } from 'react';
-import {
-  Box,
-  NativeBaseProvider,
-  Image,
-  Text,
-  View,
-  ScrollView,
-} from 'native-base';
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
   Modal,
   TextInput,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { FinishedTasksContext } from '../FinishedTasksContext/FinishedTasksContext';
-import TaskList from '../TaskList/taskList';
+  ScrollView,
+  Image,
+  Text,
+  View,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { FinishedTasksContext } from "../FinishedTasksContext/FinishedTasksContext";
+import TaskList from "../TaskList/taskList";
+import moment from "moment";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#202024',
+    backgroundColor: "#202024",
   },
   boxAll: {
     flex: 1,
-    backgroundColor: '#121214',
-    paddingHorizontal: 25,
+    backgroundColor: "#121214",
+    paddingHorizontal: 30,
   },
   boxAImg: {
-    paddingHorizontal: 25,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#202024',
-    marginTop: '10%',
-    marginBottom: '10%',
+    paddingHorizontal: 30,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#202024",
+    marginTop: "10%",
+    marginBottom: "5%",
   },
   request: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: '15%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: "10%",
   },
-  title: {
-    fontSize: 20,
-    color: '#E1E1E6',
-  },
-  number1: {
-    color: '#E1E1E6',
-    fontSize: 16,
+  titleNumber: {
+    fontSize: 18,
+    color: "#E1E1E6",
   },
   boxButton: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "center",
     gap: 10,
-    marginTop: '8%',
+    marginTop: "5%",
   },
   boxButton1: {
-    width: '50%',
-    height: 40,
-    backgroundColor: '#202024',
-
+    width: "50%",
+    backgroundColor: "#202024",
     borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttontxt1: {
-    color: '#7C7C8A',
-    textAlign: 'center',
+    color: "#7C7C8A",
     fontSize: 12,
-    marginTop: '3%',
+    padding: 7,
   },
   boxButton2: {
+    width: "50%",
+    backgroundColor: "#202024",
     borderRadius: 5,
-    width: '50%',
-    height: 40,
-    backgroundColor: '#202024',
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttontxt2: {
-    color: '#7C7C8A',
-    textAlign: 'center',
+    color: "#7C7C8A",
     fontSize: 12,
-    marginTop: '4%',
-  },
-  msgTxt: {
-    alignSelf: 'center',
-    marginTop: '15%',
-  },
-  msg: {
-    alignSelf: 'center',
-  },
-  Txt: {
-    textAlign: 'center',
-    fontSize: 16,
-    marginTop: '10%',
-    color: '#7C7C8A',
-    maxWidth: '60%',
-  },
-  boxBotton: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  enter: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 56,
-    borderRadius: 5,
-    backgroundColor: '#00875F',
-    marginBottom: '5%',
-  },
-  txtbotton: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  //estilo do MODAL
-  modal: {
-    flex: 1,
-    backgroundColor: '#202024',
-  },
-  boxTxtImg: {
-    display: 'flex',
-    justifyContent: 'center',
-    paddingHorizontal: 30,
-    marginTop: '10%',
-  },
-  seta: {
-    color: '#FFF',
-  },
-  modalTxt: {
-    color: '#FFF',
-    fontSize: 20,
-    textAlign: 'center',
-    marginTop: '-8%',
-  },
-  number: {
-    paddingHorizontal: 30,
-  },
-  input: {
-    color: '#FFF',
-    marginTop: '20%',
-    backgroundColor: '#121214',
-    width: '100%',
-    height: '24%',
-    paddingHorizontal: 15,
-    borderRadius: 5,
-  },
-  cxMsg: {
-    paddingHorizontal: 30,
-  },
-  textarea: {
-    color: '#FFF',
-    backgroundColor: '#121214',
-    height: 500,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    textAlignVertical: 'top',
-    marginTop: '-27%',
-    paddingTop: '5%',
-    paddingBottom: '8%',
-  },
-  enter1: {
-    marginTop: '7%',
-    backgroundColor: '#00875F',
-    height: 56,
-    width: 350,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
-    alignSelf: 'center',
-    margin: '5%',
-  },
-  txtbotton1: {
-    color: '#FFF',
-    fontWeight: 'bold',
-  },
-  boxP: {
-    flex: 3,
-    marginTop: '5%',
-  },
-  finishedTask: {
-    backgroundColor: '#04D361',
+    padding: 7,
   },
   activeTask1: {
     borderWidth: 1,
-    borderColor: '#FBA94C',
-    
+    borderColor: "#FBA94C",
   },
   activeTask: {
-    borderColor: '#04D361',
+    borderColor: "#04D361",
     borderWidth: 1,
   },
   activeTasktext1: {
-    color: '#FBA94C',
+    color: "#FBA94C",
   },
   activeTasktext2: {
-    color: '#04D361',
-  }
+    color: "#04D361",
+  },
+  msgTxt: {
+    alignSelf: "center",
+    marginTop: "15%",
+  },
+  msg: {
+    alignSelf: "center",
+  },
+  Txt: {
+    textAlign: "center",
+    fontSize: 16,
+    marginTop: "10%",
+    color: "#7C7C8A",
+    maxWidth: "60%",
+  },
+  boxBotton: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  enter: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 56,
+    borderRadius: 5,
+    backgroundColor: "#00875F",
+    marginBottom: "5%",
+  },
+  txtbotton: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  allModal: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  modal: {
+    flex: 1,
+    backgroundColor: "#202024",
+    paddingHorizontal: 30,
+  },
+  boxTxtImg: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "7%",
+  },
+  seta: {
+    color: "#FFF",
+  },
+  modalTxt: {
+    color: "#FFF",
+    fontSize: 20,
+    marginLeft: "25%",
+  },
+  input: {
+    color: "#FFF",
+    marginTop: "12%",
+    backgroundColor: "#121214",
+    width: "100%",
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    height: 50,
+  },
+  cxMsg: {
+    marginTop: 15,
+    marginBottom: 20,
+  },
+  textarea: {
+    color: "#FFF",
+    backgroundColor: "#121214",
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    width: "100%",
+    height: 518,
+    textAlignVertical: "top",
+    paddingTop: 12,
+  },
+  boxP: {
+    flex: 5,
+    marginTop: "5%",
+  },
+  semchamados: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  semchamadosText: {
+    color: "#7C7C8A",
+    fontSize: 16,
+    paddingHorizontal: 70,
+    textAlign: "center",
+    marginTop: 20,
+  },
 });
 
 export default function Home() {
   const { tasks, setTasks } = useContext(FinishedTasksContext);
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
-  const [input, setInput] = useState('');
-  const [input2, setInput2] = useState('');
-  const [activeFilter, setActiveFilter] = useState('emAndamento');
+  const [input, setInput] = useState("");
+  const [input2, setInput2] = useState("");
+  const [activeFilter, setActiveFilter] = useState("emAndamento");
+
+  const tasksEmAndamento = tasks.filter(
+    (task) => task.status === "emAndamento"
+  );
+  const tasksFinalizadas = tasks.filter((task) => task.status === "finalizada");
+
+  function handleCloseModal() {
+    setOpen(false);
+  }
 
   function handleTaskPress(taskData) {
-    navigation.navigate('InfosTask', { taskData });
+    if (taskData.status === "emAndamento") {
+      navigation.navigate("InfosTask", { taskData });
+    } else if (taskData.status === "finalizada") {
+      navigation.navigate("FinalizadosFinal", { taskData });
+    }
   }
 
   function filterTasks() {
-    if (activeFilter === 'finalizadas') {
-      return tasks.filter((task) => task.status === 'finalizada');
+    if (activeFilter === "finalizadas") {
+      return tasksFinalizadas;
     } else {
-      return tasks.filter((task) => task.status === 'emAndamento');
+      return tasksEmAndamento;
     }
   }
 
   function handleAdd() {
-    if (input === '' || input2 === '') return;
+    if (input === "" || input2 === "") return;
 
+    const currentTime = moment().format("DD/MM/YY [às] HH[:]mm");
     const data = {
       key: String(tasks.length + 1),
       task: input,
       description: input2,
-      status: 'emAndamento',
+      status: "emAndamento",
+      timestamp: currentTime,
     };
 
     setTasks([...tasks, data]);
     setOpen(false);
-    setInput('');
-    setInput2('');
+    setInput("");
+    setInput2("");
   }
+
+  const filteredTasks = filterTasks();
+
   return (
-    <NativeBaseProvider>
-      <Box style={styles.container}>
-        <Box style={styles.boxAImg}>
+    <View style={styles.container}>
+      <View style={styles.boxAImg}>
+        <Image
+          source={require("../../../assets/LogoMenor.png")}
+          style={styles.logo}
+          alt="logo-menor"
+        />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
-            source={require('../../../assets/LogoMenor.png')}
-            style={styles.logo}
-            alt="logo-menor"
+            source={require("../../../assets/voltardif.png")}
+            style={styles.voltardif}
+            alt="voltar-dif"
           />
-          <TouchableOpacity>
-            <Image
-              source={require('../../../assets/voltardif.png')}
-              style={styles.voltardif}
-              alt="voltar-dif"
-            />
-          </TouchableOpacity>
-        </Box>
+        </TouchableOpacity>
+      </View>
 
-        <Box style={styles.boxAll}>
-          <View>
-            <Box style={styles.request}>
-              <Text style={styles.title}>Solicitações</Text>
-              <Text style={styles.number1}>0</Text>
-            </Box>
-
-            <Box style={styles.boxButton}>
-              <TouchableOpacity
-                style={[
-                  styles.boxButton1,
-                  activeFilter === 'emAndamento' && styles.activeTask1,
-                ]}
-                onPress={() => setActiveFilter('emAndamento')}
-              >
-                <Text style={[
-                  styles.buttontxt1,
-                  activeFilter === 'emAndamento' && styles.activeTasktext1,
-                ]}>EM ANDAMENTO</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.boxButton2,
-                  activeFilter === 'finalizadas' && styles.activeTask,
-                ]}
-                onPress={() => setActiveFilter('finalizadas')}
-               
-              >
-                <Text style={[
-                  styles. buttontxt2,
-                  activeFilter === 'finalizadas' && styles.activeTasktext2,
-                ]}>FINALIZADOS</Text>
-              </TouchableOpacity>
-            </Box>
+      <View style={styles.boxAll}>
+        <View>
+          <View style={styles.request}>
+            <Text style={styles.titleNumber}>Solicitações</Text>
+            <Text style={styles.titleNumber}>
+              {activeFilter === "finalizadas"
+                ? tasksFinalizadas.length
+                : tasksEmAndamento.length}
+            </Text>
           </View>
 
-          <Box style={styles.boxP}>
-            <ScrollView>
-              <FlatList
-                data={filterTasks()}
-                renderItem={({ item }) => (
-                  <TouchableOpacity onPress={() => handleTaskPress(item)}>
-                    <TaskList data={item} />
-                  </TouchableOpacity>
-                )}
-                keyExtractor={(item) => item.key}
-              />
-            </ScrollView>
-          </Box>
-          {/* <Box style={styles.boxP}>
-            <ScrollView>
-              <FlatList
-                marginHorizontal={10}
-                data={filterTasks()}
-                backgroundColor="#fff"
-                renderItem={({ item }) => (
-                  <TouchableOpacity onPress={() => handleTaskPress(item)}>
-                    <Text>{item.task}</Text>
-                  </TouchableOpacity>
-                )}
-                keyExtractor={(item) => item.key}
-              />
-            </ScrollView>
-          </Box> */}
-
-          <Box style={styles.boxBotton}>
+          <View style={styles.boxButton}>
             <TouchableOpacity
-              onPress={() => setOpen(true)}
-              style={styles.enter}
+              style={[
+                styles.boxButton1,
+                activeFilter === "emAndamento" && styles.activeTask1,
+              ]}
+              onPress={() => setActiveFilter("emAndamento")}
             >
-              <Text style={styles.txtbotton}>Nova solicitação</Text>
+              <Text
+                style={[
+                  styles.buttontxt1,
+                  activeFilter === "emAndamento" && styles.activeTasktext1,
+                ]}
+              >
+                EM ANDAMENTO
+              </Text>
             </TouchableOpacity>
-          </Box>
+            <TouchableOpacity
+              style={[
+                styles.boxButton2,
+                activeFilter === "finalizadas" && styles.activeTask,
+              ]}
+              onPress={() => setActiveFilter("finalizadas")}
+            >
+              <Text
+                style={[
+                  styles.buttontxt2,
+                  activeFilter === "finalizadas" && styles.activeTasktext2,
+                ]}
+              >
+                FINALIZADOS
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
-          <Modal transparent={false} visible={open}>
-            <View style={styles.modal}>
-              <Box style={styles.boxTxtImg}>
-                <TouchableOpacity>
-                  <MaterialIcons
-                    style={styles.seta}
-                    name="chevron-left"
-                    size={33}
-                  />
+        <View style={styles.boxP}>
+          {filteredTasks.length === 0 && (
+            <View style={styles.semchamados}>
+              <Image source={require("../../../assets/msg.png")} alt="msg" />
+              <Text style={styles.semchamadosText}>
+                Você ainda não tem chamados criados
+              </Text>
+            </View>
+          )}
+
+          {filteredTasks.length > 0 && (
+            <FlatList
+              data={filteredTasks}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => handleTaskPress(item)}>
+                  <TaskList data={item} />
                 </TouchableOpacity>
-                <Text style={styles.modalTxt}>Solicitação</Text>
-              </Box>
+              )}
+              keyExtractor={(item) => item.key}
+            />
+          )}
+        </View>
+
+        <View style={styles.boxBotton}>
+          <TouchableOpacity onPress={() => setOpen(true)} style={styles.enter}>
+            <Text style={styles.txtbotton}>Nova solicitação</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Modal transparent={false} visible={open} style={styles.allModal}>
+          <View style={styles.modal}>
+            <View style={styles.boxTxtImg}>
+              <TouchableOpacity onPress={handleCloseModal}>
+                <MaterialIcons
+                  style={styles.seta}
+                  name="chevron-left"
+                  size={33}
+                />
+              </TouchableOpacity>
+              <Text style={styles.modalTxt}>Solicitação</Text>
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <View>
-                <Box style={styles.number}>
+                <View style={styles.number}>
                   <TextInput
                     placeholder="Número do Patrimônio"
                     keyboardType="numeric"
@@ -349,8 +351,8 @@ export default function Home() {
                     value={input}
                     onChangeText={setInput}
                   />
-                </Box>
-                <Box style={styles.cxMsg}>
+                </View>
+                <View style={styles.cxMsg}>
                   <TextInput
                     placeholder="Descrição do problema"
                     style={styles.textarea}
@@ -359,16 +361,18 @@ export default function Home() {
                     value={input2}
                     onChangeText={setInput2}
                   />
-                </Box>
+                </View>
 
-                <TouchableOpacity style={styles.enter1} onPress={handleAdd}>
-                  <Text style={styles.txtbotton1}>Cadastrar</Text>
-                </TouchableOpacity>
+                <View style={styles.txtbotton}>
+                  <TouchableOpacity style={styles.enter} onPress={handleAdd}>
+                    <Text style={styles.txtbotton}>Cadastrar</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          </Modal>
-        </Box>
-      </Box>
-    </NativeBaseProvider>
+            </ScrollView>
+          </View>
+        </Modal>
+      </View>
+    </View>
   );
 }
