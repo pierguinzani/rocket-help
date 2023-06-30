@@ -1,10 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
 import { HStack, Heading, IconButton } from 'native-base';
 import GetBack from '../assets/GetBack.svg';
 
 
 
  export function Header({ title, ...rest }) {
-  
+  const navigation = useNavigation();
+
+  function handleGoBack() {
+    navigation.goBack();
+  }
 
   return (
     <HStack
@@ -17,10 +22,11 @@ import GetBack from '../assets/GetBack.svg';
       
     >
       <IconButton
-        icon={<GetBack color={"#7C7C8A"} width={24} height={24} />}
+        icon={<GetBack color={"#7C7C8A"} width={24} height={24} marginTop={10}/>}
+        onPress={handleGoBack}
         {...rest}
       />
-    <Heading color={"#E1E1E6"} fontSize={"20px"} fontWeight={"bold"} textAlign={"center"} mr={"124px"} >
+    <Heading color={"#E1E1E6"} fontSize={"20px"} fontWeight={"bold"} textAlign={"center"} mr={"140px"}  mt={"16px"}>
       {title}
     </Heading>
     </HStack>  

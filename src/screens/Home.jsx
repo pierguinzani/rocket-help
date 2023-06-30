@@ -18,24 +18,6 @@ export function Home() {
     patrimony: "123456",
     when: '28/06/2023 ás 10:00',
     status: 'open'
-  },
-  {
-    id: "2",
-    patrimony: "235135",
-    when: '28/06/2023 ás 11:00',
-    status: 'closed'
-  },
-  {
-    id: "3",
-    patrimony: "235135",
-    when: '28/06/2023 ás 11:00',
-    status: 'closed'
-  },
-  {
-    id: "4",
-    patrimony: "235135",
-    when: '28/06/2023 ás 11:00',
-    status: 'closed'
   }
 ])
 
@@ -51,7 +33,9 @@ const navigation = useNavigation();
     navigation.navigate('SignIn')
   }
   
-  
+  function handleOpenOrderDetails(orderId){
+    navigation.navigate('OrderDetails', {orderId} )
+  }
   return (
     <View bgColor={"#121214"} height={"100%"}>
       <HStack
@@ -97,7 +81,7 @@ const navigation = useNavigation();
       <FlatList 
         data={orders}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <Orders data={item} />}
+        renderItem={({ item }) => <Orders data={item} onPress={() => handleOpenOrderDetails(item.id)}/>}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
         ListEmptyComponent={()=> (

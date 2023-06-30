@@ -8,20 +8,15 @@ import { Input } from '../components/Input';
 
 export function NewOrder() {
   const navigation = useNavigation();
-  
-  function handleNavigation() {
-    navigation.navigate('Home')
+
+  function handleGoBack() {
+    navigation.goBack();
   }
 
-  function handleLogout() {
-    navigation.navigate('SignIn')
-  }
   return (
     <VStack flex={1} padding={6} bgColor={"#202024"}>
       <Header
         title="Solicitação"
-        marginTop={4}
-        onPress={handleLogout}
       />
 
       <Input 
@@ -37,7 +32,9 @@ export function NewOrder() {
         marginTop={5}
         fontSize={"16px"}
       />  
-      <Button title="Cadastrar" onPress={handleNavigation} marginTop={5} />
+      <Button title="Cadastrar" marginTop={5} 
+        onPress={handleGoBack}
+      />
     </VStack>
   )
 }
