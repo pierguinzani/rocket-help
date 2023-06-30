@@ -1,12 +1,11 @@
 import { Button as NativeBaseButton, Box} from "native-base";
 import { Roboto_400Regular } from '@expo-google-fonts/roboto'
 
-export function Button({...rest}){
+export function Button({...props}){
     return (
             <NativeBaseButton
                 justifyContent={"center"}
                 bg={'#00875F'}
-                width={"90%"}
                 height={"56px"}
                 fontSize={"md"}
                 fontWeight={"bold"}
@@ -17,9 +16,9 @@ export function Button({...rest}){
                         bg:"#009C7B"
                     }
                 }
-                {...rest}
+                {...props}
             >
-                Entrar
+                {props.title}
             </NativeBaseButton>
     )
 }
