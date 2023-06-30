@@ -10,6 +10,7 @@ export function NewOrder() {
   const navigation = useNavigation();
 
   function handleGoBack() {
+    alert("Solicitação enviada com sucesso!")
     navigation.goBack();
   }
 
