@@ -1,28 +1,22 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Roboto_400Regular, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto';
 import { NativeBaseProvider } from 'native-base';
-import { Home } from './src/screens/Home';
-import { NewOrder } from './src/screens/NewOrder';
-import { SignIn } from './src/screens/SignIn';
+import { Loading } from './src/components/Loading';
+import { Routes } from './src/routes';
 
 
 
-const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Roboto_700Bold
+  });
+
   return (
-    <NavigationContainer>
-      <NativeBaseProvider>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-          <Stack.Screen name="SignIn" component={SignIn} />
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="NewOrder" component={NewOrder} />
-        </Stack.Navigator>
-      </NativeBaseProvider>
-    </NavigationContainer>
+
+    <NativeBaseProvider>
+      {fontsLoaded ? <Routes /> : <Loading />}
+    </NativeBaseProvider>
+
   );
 }
