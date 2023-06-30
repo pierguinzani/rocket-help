@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { FlatList, HStack, Heading, IconButton, Text, VStack, View } from 'native-base';
 import { useState } from 'react';
 import LogoHeader from '../assets/LogoHeader.svg';
@@ -10,7 +11,7 @@ import { StatusCard } from '../components/StatusCard';
 
 
 
-export function Home ({ navigation }) {
+export function Home() {
   const [statusSelected, setStatusSelected] = useState('open');
   const [orders, setOrders] = useState([{
     id: "1",
@@ -36,11 +37,13 @@ export function Home ({ navigation }) {
     when: '28/06/2023 ás 11:00',
     status: 'closed'
   }
-
-
-
 ])
+
+const navigation = useNavigation();
+
+
   function handleNewOrder() {
+    
     navigation.navigate('NewOrder')
   }
   

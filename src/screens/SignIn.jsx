@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Text, View } from "native-base";
 import IonicIcons from 'react-native-vector-icons/Ionicons';
 import Logo from '../assets/Logo.svg';
@@ -8,7 +9,9 @@ import { Input } from "../components/Input";
 
 
 
-export function SignIn({ navigation }) {
+export function SignIn() {
+  const navigation = useNavigation();
+  
   const handleSignIn = () => {
     navigation.navigate('Home'); 
   };

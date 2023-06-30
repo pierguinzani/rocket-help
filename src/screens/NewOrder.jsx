@@ -1,19 +1,27 @@
-import { VStack } from 'native-base'
-import { Button } from '../components/Button'
-import { Header } from '../components/Header'
-import { Input } from '../components/Input'
+import { useNavigation } from '@react-navigation/native';
+import { VStack } from 'native-base';
+import { Button } from '../components/Button';
+import { Header } from '../components/Header';
+import { Input } from '../components/Input';
 
 
 
-export function NewOrder({ navigation }) {
+export function NewOrder() {
+  const navigation = useNavigation();
+  
   function handleNavigation() {
     navigation.navigate('Home')
+  }
+
+  function handleLogout() {
+    navigation.navigate('SignIn')
   }
   return (
     <VStack flex={1} padding={6} bgColor={"#202024"}>
       <Header
         title="Solicitação"
         marginTop={4}
+        onPress={handleLogout}
       />
 
       <Input 

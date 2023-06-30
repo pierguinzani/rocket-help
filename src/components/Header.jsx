@@ -3,10 +3,8 @@ import GetBack from '../assets/GetBack.svg';
 
 
 
- export function Header({ navigation, title, ...rest }) {
-  function handleLogout() {
-    navigation.navigate('SignIn')
-  }
+ export function Header({ title, ...rest }) {
+  
 
   return (
     <HStack
@@ -16,11 +14,11 @@ import GetBack from '../assets/GetBack.svg';
       bgColor={"#202024"}
       pb={6}
       pt={12}
-      {...rest}
+      
     >
       <IconButton
         icon={<GetBack color={"#7C7C8A"} width={24} height={24} />}
-        onPress={handleLogout}
+        {...rest}
       />
     <Heading color={"#E1E1E6"} fontSize={"20px"} fontWeight={"bold"} textAlign={"center"} mr={"124px"} >
       {title}
