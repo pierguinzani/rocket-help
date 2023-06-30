@@ -1,24 +1,26 @@
 
-import { KeyboardAvoidingView, VStack, Heading, View,Box,Image } from 'native-base';
+import { VStack, Heading,Box,Image } from 'native-base';
 
 
 
 const img = require('../public/Logo.png');
 
 import { Input } from '../components/Input'
-
 import { Button } from '../components/Button';
 import IonicIcons from 'react-native-vector-icons/Ionicons';
-import useState  from 'react';
 
 
-export function SignIn() {
-
+export function SignIn({navigation}) {
+    function handleSignIn(){
+        navigation.navigate('Home');
+    }
     return (
         <VStack  flex={1} alignItems={"center"} justifyContent={"center"}  backgroundColor={"#202024"}>
 
-            <Box>
-            <Image 
+            <Box
+            marginBottom={30}
+            >
+            <Image
                 source={img}
                 width={163}
                 height={87}
@@ -43,6 +45,9 @@ export function SignIn() {
             />
 
             <Button
+            width={"90%"}
+            onPress={handleSignIn}
+            title={"Entrar"}
             />
 
         </VStack>    
