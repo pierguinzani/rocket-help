@@ -1,29 +1,31 @@
-import { HStack, IconButton } from 'native-base';
-import LogoHeader from '../assets/LogoHeader.svg';
-import SignOutIcon from '../assets/SignOutIcon.svg';
+import { HStack, Heading, IconButton } from 'native-base';
+import GetBack from '../assets/GetBack.svg';
 
 
 
-
-export function Header({ title, ...rest }) {
-
+ export function Header({ navigation, title, ...rest }) {
+  function handleLogout() {
+    navigation.navigate('SignIn')
+  }
 
   return (
     <HStack
-      w="full"
-      height={"136px"}
-      justifyContent="space-between"
-      alignItems="center"
-      bg="#202024"
+      width={"full"}
+      justifyContent={"space-between"}
+      alignItems={"center"}
+      bgColor={"#202024"}
       pb={6}
       pt={12}
+      {...rest}
     >
-      <LogoHeader marginLeft={24} />
       <IconButton
-        icon={<SignOutIcon color={"#7C7C8A"} width={26} height={26} marginRight={12.73} />}
-        {...rest}
+        icon={<GetBack color={"#7C7C8A"} width={24} height={24} />}
+        onPress={handleLogout}
       />
-    </HStack>
+    <Heading color={"#E1E1E6"} fontSize={"20px"} fontWeight={"bold"} textAlign={"center"} mr={"124px"} >
+      {title}
+    </Heading>
+    </HStack>  
   );
 }
 

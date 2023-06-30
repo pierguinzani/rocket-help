@@ -1,4 +1,4 @@
-import { Box, Circle, HStack, Pressable, Text, VStack, useTheme } from 'native-base';
+import { Box, Circle, HStack, Pressable, Text, VStack } from 'native-base';
 import Clock from '../assets/Clock.svg';
 import HourGlass from '../assets/HourGlass.svg';
 import WavyCheck from '../assets/WavyCheck.svg';
@@ -7,8 +7,9 @@ import WavyCheck from '../assets/WavyCheck.svg';
 
 
 export function Orders({ data, ...rest }){
-  const { colors } = useTheme()
-  const statusColor = data.status === 'open' ? colors.secondary[700] : "#04D361";
+
+  
+  const statusColor = data.status === 'open' ? "#FBA94C" : "#04D361";
   return (
   <Pressable>
     <HStack

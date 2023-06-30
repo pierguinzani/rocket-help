@@ -1,8 +1,9 @@
-import { FlatList, HStack, Heading, Text, VStack, View } from 'native-base';
+import { FlatList, HStack, Heading, IconButton, Text, VStack, View } from 'native-base';
 import { useState } from 'react';
+import LogoHeader from '../assets/LogoHeader.svg';
 import NoCallsChat from '../assets/NoCallsChat.svg';
+import SignOutIcon from '../assets/SignOutIcon.svg';
 import { Button } from '../components/Button';
-import { Header } from '../components/Header';
 import { Orders } from '../components/Orders';
 import { StatusCard } from '../components/StatusCard';
 
@@ -22,11 +23,26 @@ export function Home ({ navigation }) {
     patrimony: "235135",
     when: '28/06/2023 ás 11:00',
     status: 'closed'
+  },
+  {
+    id: "3",
+    patrimony: "235135",
+    when: '28/06/2023 ás 11:00',
+    status: 'closed'
+  },
+  {
+    id: "4",
+    patrimony: "235135",
+    when: '28/06/2023 ás 11:00',
+    status: 'closed'
   }
 
 
 
 ])
+  function handleNewOrder() {
+    navigation.navigate('NewOrder')
+  }
   
   function handleLogout() {
     navigation.navigate('SignIn')
@@ -35,9 +51,21 @@ export function Home ({ navigation }) {
   
   return (
     <View bgColor={"#121214"} height={"100%"}>
-      <Header 
+      <HStack
+      w="full"
+      height={"136px"}
+      justifyContent="space-between"
+      alignItems="center"
+      bg="#202024"
+      pb={6}
+      pt={12}
+    >
+      <LogoHeader marginLeft={24} />
+      <IconButton
+        icon={<SignOutIcon color={"#7C7C8A"} width={26} height={26} marginRight={12.73}/>}
         onPress={handleLogout}
       />
+    </HStack>
       <VStack flex={1} px={6} >
       <HStack w="full" mt={8} mb={4} justifyContent="space-between" alignItems="center">
           <Heading color="gray.100" fontSize={"20px"}>
@@ -80,7 +108,7 @@ export function Home ({ navigation }) {
       marginTop={"auto"}
       marginBottom={"35px"}
       title="Nova solicitação"
-      onPress={() => console.log('teste')}  
+      onPress={handleNewOrder}  
       />
       
       </VStack>
