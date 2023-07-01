@@ -1,5 +1,5 @@
 import { Text, VStack, HStack, Heading,FlatList, IconButton, Center} from "native-base";
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import IonicIcons from 'react-native-vector-icons/Ionicons';
 
 import { Button } from "../components/Button";
@@ -10,47 +10,30 @@ import Logo from "../public/Logo2.svg";
 import SymbolEmpty from "../public/SymbolEmpty.svg";
 
 
-export function Home({navigation}){
+export function Home({navigation, route}){
     function handleSignOff(){
         navigation.navigate('SignIn');
     }
     const [statusSelected,setStatus] = useState('open');
-    const [orders] = useState([
-        {
-            id: '1',
-            product: '147456',
-            when: '20/01/22 às 14h',
-            status: 'open',
-        },
-        {
-            id: '2',
-            product: '147456',
-            when: '20/01/22 às 14h',
-            status: 'closed',
-        },
-        {
-            id: '3',
-            product: '147456',
-            when: '20/01/22 às 14h',
-            status: 'open',
-        },
-        {
-            id: '4',
-            product: '147456',
-            when: '20/01/22 às 14h',
-            status: 'closed',
-        },
-        {
-            id: '5',
-            product: '147456',
-            when: '20/01/22 às 14h',
-            status: 'closed',
-        },
-    ]);
+    const [orders,setOrders] = useState([ ]);
     
     const filteredOrders = orders.filter(
         order => order.status === (statusSelected === 'open' ? 'open' : 'closed')
       )
+
+    const { patrimonio, descricao } = route.params || {};
+
+    useEffect(() => {
+        if (route.params && route.params.patrimonio && route.params.descricao) {
+          const newOrder = {
+            id: orders.length + 1,
+            product: route.params.patrimonio,
+            when: '20/01/22 às 14h',
+            status: 'open',
+          };
+          setOrders([...orders, newOrder]);
+        }
+      }, [route.params]);
 
     return (
         <VStack flex={1} pb={6} bg="#121214">
