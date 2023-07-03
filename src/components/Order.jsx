@@ -1,16 +1,23 @@
 import React from 'react';
-import { HStack, Text, Box, VStack, Icon } from 'native-base';
+import { HStack, Text, Box, VStack, Pressable, FlatList } from 'native-base';
 
 import IonicIcons from 'react-native-vector-icons/Ionicons';
 import IconEnd from "../public/IconEnd.svg";
 import IconAndamento from "../public/IconAndamento.svg";
+import { useNavigation } from '@react-navigation/native';
 
 
-export function Order({data}) {
+export function Order({data, ...rest}) {
+    const navigation = useNavigation();
     const colorStatus = data.status === 'open' ? '#D08E44' : '#04D361';
     const IconsUse = data.status === 'open' ? <IconAndamento/> : <IconEnd/>;
+    
+    const handleOrderDetails = () => {
+      navigation.navigate('DetailsOrder');
+    };
 
   return (
+    <Pressable {...rest}>
     <HStack
     backgroundColor={"#202024"}
     alignItems={"center"}
@@ -39,5 +46,6 @@ export function Order({data}) {
     </HStack>
 
     </HStack>
+    </Pressable>
   );
 }

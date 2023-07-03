@@ -8,26 +8,33 @@ import { Order } from '../components/Order'
 
 import Logo from "../public/Logo2.svg";
 import SymbolEmpty from "../public/SymbolEmpty.svg";
+import { useNavigation } from "@react-navigation/native";
 
 
-export function Home({navigation, route}){
+export function Home({ route}){
+    const navigation = useNavigation();
+    const [statusSelected,setStatus] = useState('open');
+    const [orders,setOrders] = useState([ ]);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    
+    function handleOrderDetails() {
+        navigation.navigate('DetailsOrder');
+        };
+      
     function handleSignOff(){
         navigation.navigate('SignIn');
     }
-    const [statusSelected,setStatus] = useState('open');
-    const [orders,setOrders] = useState([ ]);
-    
     const filteredOrders = orders.filter(
         order => order.status === (statusSelected === 'open' ? 'open' : 'closed')
-      )
-
-    const { patrimonio, descricao } = route.params || {};
+        )
+        
 
     useEffect(() => {
         if (route.params && route.params.patrimonio && route.params.descricao) {
           const newOrder = {
             id: orders.length + 1,
             product: route.params.patrimonio,
+            description: route.params.descricao,
             when: '20/01/22 às 14h',
             status: 'open',
           };
@@ -87,7 +94,7 @@ export function Home({navigation, route}){
                 <FlatList
                     data={filteredOrders}
                     keyExtractor={item => item.id}
-                    renderItem = { ({item}) => <Order data={item} /> }
+                    renderItem = { ({item}) => <Order data={item} onPress={handleOrderDetails} /> }
                     ListEmptyComponent={() => (
                         <Center>
                             <SymbolEmpty/>
@@ -98,11 +105,10 @@ export function Home({navigation, route}){
                         </Center>
                     )}
                 />
-
                 <Button 
                     title={"Nova solicitação"} 
                     onPress={() => navigation.navigate('NewOrder')}
-                />
+                    />
             </VStack>
 
         </VStack>
