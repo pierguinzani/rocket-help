@@ -26,7 +26,7 @@ export function DetailsOrder() {
     product: 123456,
     description: 'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
     when: '20/01/22 às 14h',
-    status: 'open',
+    status: 'closed',
   }
   
   const colorStatus = order.status === 'open' ? '#D08E44' : '#04D361';

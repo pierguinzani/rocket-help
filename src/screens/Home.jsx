@@ -18,7 +18,9 @@ export function Home({ route}){
     const [selectedOrder, setSelectedOrder] = useState(null);
     
     function handleOrderDetails() {
-        navigation.navigate('DetailsOrder');
+        navigation.navigate('DetailsOrder',{
+            order: selectedOrder,
+        });
         };
       
     function handleSignOff(){
@@ -36,7 +38,7 @@ export function Home({ route}){
             product: route.params.patrimonio,
             description: route.params.descricao,
             when: '20/01/22 às 14h',
-            status: 'open',
+            status: 'closed',
           };
           setOrders([...orders, newOrder]);
         }
@@ -106,7 +108,7 @@ export function Home({ route}){
                     )}
                 />
                 <Button 
-                    title={"Nova solicitação"} 
+                    title={"rhaynon"} 
                     onPress={() => navigation.navigate('NewOrder')}
                     />
             </VStack>
