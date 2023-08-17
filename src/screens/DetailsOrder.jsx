@@ -18,7 +18,9 @@ export function DetailsOrder() {
   }
   function handleEnd(){
     alert("Solicitação Finalizada!")
-    navigation.navigate('Home');
+    navigation.navigate('Home', {
+      status: 'closed'
+    });
   }
   
   let order = {

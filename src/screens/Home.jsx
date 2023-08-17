@@ -38,7 +38,7 @@ export function Home({ route}){
             product: route.params.patrimonio,
             description: route.params.descricao,
             when: '20/01/22 às 14h',
-            status: 'closed',
+            status: 'open',
           };
           setOrders([...orders, newOrder]);
         }
@@ -108,7 +108,7 @@ export function Home({ route}){
                     )}
                 />
                 <Button 
-                    title={"rhaynon"} 
+                    title={"Nova solicitação"} 
                     onPress={() => navigation.navigate('NewOrder')}
                     />
             </VStack>
