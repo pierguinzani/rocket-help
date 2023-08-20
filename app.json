@@ -14,9 +14,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "plugins": [
-      "@react-native-firebase/app"
-    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.rockethelp",
