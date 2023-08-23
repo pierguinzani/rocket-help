@@ -21,8 +21,7 @@ export default function App() {
         headerShown: false
       }}
       >
-
-      {fontsLoaded ? <Stack.Screen name='SignIn' component={SignIn}/> : <Text> Loading</Text>}
+      <Stack.Screen name='SignIn' component={SignIn}/>
       <Stack.Screen name='Home' component={Home}/>
       <Stack.Screen name='NewOrder' component={NewOrder}/>
       <Stack.Screen name='DetailsOrder' component={DetailsOrder}/>
