@@ -1,6 +1,7 @@
 import { Text, VStack, HStack, Heading,FlatList, IconButton, Center} from "native-base";
 import {useState, useEffect} from 'react'
 import IonicIcons from 'react-native-vector-icons/Ionicons';
+import notifee, { AndroidImportance} from '@notifee/react-native';
 
 import { Button } from "../components/Button";
 import { Filter } from '../components/Filter'
@@ -17,15 +18,32 @@ export function Home({ route}){
     const [orders,setOrders] = useState([ ]);
     const [selectedOrder, setSelectedOrder] = useState(null);
     
+    const handleSignOff = async () => {
+        const channelId = await notifee.createChannel({
+            id: 'login',
+            name: 'Default Channel',
+            importance: AndroidImportance.HIGH,
+        });
+    await notifee.displayNotification({
+        title: 'Até logo!',
+        body: 'Você fez logout com sucesso.',
+        android: {
+          channelId,
+          smallIcon: 'smallicon',
+          pressAction: {
+            id: 'default',
+          },
+        },
+      });
+        navigation.navigate('SignIn');
+    }  
+
     function handleOrderDetails() {
         navigation.navigate('DetailsOrder',{
             order: selectedOrder,
         });
         };
       
-    function handleSignOff(){
-        navigation.navigate('SignIn');
-    }
     const filteredOrders = orders.filter(
         order => order.status === (statusSelected === 'open' ? 'open' : 'closed')
         )
