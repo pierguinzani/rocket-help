@@ -1,19 +1,36 @@
 
 import { VStack, Heading, Box, Image } from 'native-base';
-
-
+import notifee, { AndroidImportance, AndroidColor} from '@notifee/react-native';
 
 const img = require('../public/Logo.png');
-
 import { Input } from '../components/Input'
 import { Button } from '../components/Button';
 import IonicIcons from 'react-native-vector-icons/Ionicons';
 
-
 export function SignIn({ navigation }) {
-    function handleSignIn() {
+
+    const handleSendLogin = async () => {
+        await notifee.requestPermission()
+        const channelId = await notifee.createChannel({
+            id: 'login',
+            name: 'Default Channel',
+            importance: AndroidImportance.HIGH,
+        });
+    await notifee.displayNotification({
+        title: 'Bem-vindo ao nosso aplicativo!',
+        body: 'Você fez login com sucesso.',
+        android: {
+          channelId,
+          smallIcon: 'ic_stat_name',
+          color : '#00B37E',
+          pressAction: {
+            id: 'default',
+          },
+        },
+      });
         navigation.navigate('Home');
-    }
+    }  
+
     return (
         <VStack flex={1} alignItems={"center"} justifyContent={"center"} backgroundColor={"#202024"}>
 
@@ -46,10 +63,9 @@ export function SignIn({ navigation }) {
 
             <Button
                 width={"90%"}
-                onPress={handleSignIn}
+                onPress={handleSendLogin}
                 title={"Entrar"}
             />
-
         </VStack>
     )
 }
